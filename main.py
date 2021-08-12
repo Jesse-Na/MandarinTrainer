@@ -41,7 +41,7 @@ def main():
 
     args = parser.parse_args()
     print(args)
-    while (input('Go Again? (Press any key to continue or N to quit)') != 'N'):
+    while input('Go Again? (Press any key to continue or N to quit)') != 'N':
         fivestar = db.reviews.find_one({'rating': 5})
         print(fivestar)
 
