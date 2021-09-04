@@ -54,10 +54,21 @@ class DBGateway:
 class Tester:
     def __init__(self, words):
         self.words = words
+        self.answers = []
 
     def give_word(self):
-        r = randint(0, len(self.words))
-        return self.words.pop(r)
+        if not self.is_empty():
+            r = randint(0, len(self.words) - 1)
+            word = self.words.pop(r)
+            self.answers.append(word)
+            return word['english']
+
+    def is_empty(self):
+        return len(self.words) == 0
+
+    def print_answers(self):
+        for word in self.answers:
+            print(word)
 
 
 def main():
@@ -97,10 +108,13 @@ def main():
         words = list(db_gateway.read_from_db())
         if words:
             tester = Tester(words)
-            print(words)
+            print(tester.give_word())
+            while input('Another? (Press any key to continue or Q to quit)') != 'Q' and not tester.is_empty():
+                print(tester.give_word())
+            if tester.is_empty():
+                tester.print_answers()
 
-    while input('Go Again? (Press any key to continue or N to quit)') != 'N':
-        db_gateway.is_valid_pool()
+    print('Finish')
 
 
 if __name__ == '__main__':
