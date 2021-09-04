@@ -35,7 +35,7 @@ class DBGateway:
         if len(self.words) > 0:
             self.db[self.pool].delete_many({'simplified': {'$in': self.words}})
         else:
-            self.db[self.pool].delete_many({})  # delete all
+            self.db[self.pool].drop()  # delete all
         return True
 
     def read_from_db(self):
