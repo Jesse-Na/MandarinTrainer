@@ -55,20 +55,22 @@ class Tester:
     def __init__(self, words):
         self.words = words
         self.answers = []
-
-    def give_word(self):
-        if not self.is_empty():
+        self.curr_word = None
+        # Generate random list of words
+        while len(self.words) != 0:
             r = randint(0, len(self.words) - 1)
             word = self.words.pop(r)
             self.answers.append(word)
-            return word['english']
+
+    def give_word(self):
+        self.curr_word = self.answers.pop()
+        return self.curr_word['english']
 
     def is_empty(self):
-        return len(self.words) == 0
+        return len(self.answers) == 0
 
-    def print_answers(self):
-        for word in self.answers:
-            print(word)
+    def give_answer(self):
+        return self.curr_word
 
 
 def main():
@@ -110,9 +112,9 @@ def main():
             tester = Tester(words)
             print(tester.give_word())
             while input('Another? (Press any key to continue or Q to quit)') != 'Q' and not tester.is_empty():
+                print(tester.give_answer())
                 print(tester.give_word())
-            if tester.is_empty():
-                tester.print_answers()
+            print(tester.give_answer())
 
     print('Finish')
 
