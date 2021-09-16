@@ -73,9 +73,11 @@ class Tester:
 
 def main():
     parser = argparse.ArgumentParser('Test your mandarin skills\n')
-    parser.add_argument('command', choices=['insert', 'delete', 'test'], nargs=1,
-                        help='insert - for adding new words to a pool\ndelete - for deleting words from a pool\ntest - '
-                             'for pseudo randomly picking words from a pool')
+    parser.add_argument('command', choices=['insert', 'delete', 'display', 'test'], nargs=1,
+                        help='insert - for adding new words to a pool\n'
+                             'delete - for deleting words from a pool\n'
+                             'display - to display all words in the given pool\n'
+                             'test - for pseudo randomly picking words from a pool')
     parser.add_argument('pool', nargs=1, help='the pool of words to interact with')
     parser.add_argument('words', nargs='*', help='words to insert or delete')
     args = parser.parse_args()
@@ -104,6 +106,10 @@ def main():
             print('Delete successful')
         else:
             print('Delete failed')
+    elif command == 'display':
+        words = list(db_gateway.read_from_db())
+        for word in words:
+            print(word['simplified'], word['pinyin'], word['english'])
     else:
         words = list(db_gateway.read_from_db())
         if words:
