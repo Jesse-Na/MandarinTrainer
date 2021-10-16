@@ -5,6 +5,7 @@ import argparse
 from typing import List
 from dotenv import load_dotenv
 import cc_edict_parser
+import ssl
 
 load_dotenv()
 MONGODB = os.getenv('MONGODB')
@@ -87,7 +88,7 @@ def main():
 
     client = MongoClient(
         "mongodb+srv://keren:{}@mandarintrainer.w7ywy.mongodb.net/MandarinTrainer?retryWrites=true&w=majority".format(
-            MONGODB))
+            MONGODB), ssl_cert_reqs=ssl.CERT_NONE)
     db = client.MandarinTrainer
 
     cc_edict_dict = cc_edict_parser.get_dicts()
